@@ -90,12 +90,8 @@ def main():
 				val_count += 1
 				index += 1
 				
-				# This format writes the R, G, and B channels simultaneously
-				# it is more likely to leave blank rows at the end of the image
-				'''rgb[val_count] = encoded_message[index]'''
-				
 				# This format writes R first, then loops back around to G, and then B
-				# It can only leave a blank row if the message length is < 1/3 of the image area
+				# It can only leave blank rows if the message length is < 1/3 of the image area
 				rgb[val_count] = encoded_message[(val_count*width*height)+rgb_count+(row_count*width)]
 
 	#print("AFTER RGB IMAGE:", rgb_image, "\n")
