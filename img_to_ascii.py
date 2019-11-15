@@ -69,7 +69,7 @@ def main():
 
 	decoded_message.reverse()
 
-	# Remove the bytes marked by the list of bools
+	# Remove the number of trailing zero bytes
 	for i in range(bytes_to_strip):
 		decoded_message.pop()
 
