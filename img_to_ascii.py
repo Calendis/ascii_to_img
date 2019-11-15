@@ -31,8 +31,6 @@ def main():
 
 	for ix in range(width):
 		for iy in range(height):
-			# The try is to ignore parts of the image with no data
-			# This happens if you use a relatively large image size compared to the text
 			try:
 				red_characters.append(pixels[iy, ix][0])
 			except:
@@ -52,14 +50,28 @@ def main():
 	# A better way using three loops
 	decoded_message = []
 	for v in red_characters:
-		if v != 0:
-			decoded_message.append(chr(v))
+		decoded_message.append(chr(v))
 	for v in green_characters:
-		if v != 0:
-			decoded_message.append(chr(v))
+		decoded_message.append(chr(v))
 	for v in blue_characters:
-		if v != 0:
-			decoded_message.append(chr(v))
+		decoded_message.append(chr(v))
+
+	# Strip the trailing null bytes from the end.
+	# These occur because you probably won't fill an ENTIRE n*m image with text while encoding,
+	# so decoding picks up a bunch of black at the end (null bytes)
+	bytes_to_strip = 0
+	decoded_message.reverse()
+	for i in range(len(decoded_message)):
+		if decoded_message[i] == chr(0):
+			bytes_to_strip += 1
+		else:
+			break # We don't want to strip ALL the null bytes, only trailing ones!
+
+	decoded_message.reverse()
+
+	# Remove the bytes marked by the list of bools
+	for i in range(bytes_to_strip):
+		decoded_message.pop()
 
 	# Output the message. It could be written to a file using '>' in bash
 	print(*decoded_message, sep="")
