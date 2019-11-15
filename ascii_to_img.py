@@ -47,7 +47,7 @@ def main():
 
 	# Make sure the image is long enough to contain the message
 	try:
-		assert(len(message) <= 3*arguments[1]*arguments[2])
+		assert(len(message)-1 <= 3*arguments[1]*arguments[2])
 	except:
 		print_usage("toolong", len(message), arguments[1], arguments[2])
 		return
